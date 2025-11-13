@@ -123,6 +123,7 @@ import Promotion from '@/assets/promotion.png';
 import { useDisplay } from 'vuetify';
 import { GET_DOMAIN } from '../js/api';
 const { mdAndUp } = useDisplay();
+import CryptoJS from 'crypto-js';
 
 const domains = ref([]);
 const currentSlide = ref(0)
@@ -218,10 +219,6 @@ function stopDrag(e) {
     // 🧩 Only trigger click if the user didn’t really move
     if (!drag.moved) {
         let target = e.target
-
-        // Find the closest button (or the draggable button itself)
-        target = target.closest('button.draggable-btn')
-
         if (target && typeof target.click === 'function') {
             target.click()
         }
@@ -261,16 +258,17 @@ function getPlatform() {
 
 const downloadIOS = () => {
     const link = document.createElement('a');
-    link.href = 'https://example.com/path/to/your/app.mobileconfig';
+    link.href = '/uploads/hj.mobileconfig';
     link.download = 'huangjia.mobileconfig';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);  
 }
+
 const downloadANROID = () => {
     const link = document.createElement('a');
-    link.href = 'https://example.com/path/to/your/app.apk';
-    link.download = 'huangjia.mobileconfig';
+    link.href = '/uploads/hj.apk';
+    link.download = 'huangjia.apk';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);  
@@ -281,7 +279,7 @@ const startGame = () => {
     const selectedDomain = domains.value[randomIndex];
 
     // console.log(selectedDomain);
-    const encoded = encodeBase64(selectedDomain);
+    // const encoded = encodeBase64(selectedDomain);
     // console.log("Encode:", encoded);
 
     const decoded = decodeBase64(selectedDomain);
@@ -291,7 +289,11 @@ const startGame = () => {
 }
 
 const goToService = () => {
-    
+    const timestamp = (new Date).getTime();
+    const md5 = CryptoJS.MD5(String(timestamp)).toString(CryptoJS.enc.Hex).toLowerCase();
+    const url = 'https://www.hjkf25.xyz/#/?visiter_id=&avatar=&business_id=307&groupid=1&special=1002&nick_name=';
+    const serviceURL = `${url}&t=${timestamp}&sign=${md5}`;
+    window.open(serviceURL, '_blank');
 }
 
 const getDomains = async () => {
