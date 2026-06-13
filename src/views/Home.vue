@@ -29,7 +29,7 @@
                 
                 <div v-if="getPlatform() === 'web'">
                     <div class="px-3 mt-3">
-                        <v-btn size="x-large" rounded="lg" block color="primary" @click="downloadANROID">
+                        <v-btn size="x-large" rounded="lg" block color="primary" @click="downloadANDROID">
                             <v-icon class="mr-2">mdi-android</v-icon> 下载安卓版
                         </v-btn>
                     </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div v-if="getPlatform() === 'android'">
                     <div class="px-3 mt-3">
-                        <v-btn size="x-large" rounded="lg" block color="primary" @click="downloadANROID">下载 APP</v-btn>
+                        <v-btn size="x-large" rounded="lg" block color="primary" @click="downloadANDROID">下载 APP</v-btn>
                     </div>
                 </div>
                 <div class="px-3 mt-3">
@@ -112,9 +112,9 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
-import Banner1 from '@/assets/banner1.png';
-import Banner2 from '@/assets/banner2.png';
-import Banner3 from '@/assets/banner3.png';
+import Banner1 from '@/assets/banner1__.png';
+import Banner2 from '@/assets/banner2__.png';
+import Banner3 from '@/assets/banner3__.png';
 import Step1 from '@/assets/step1.png';
 import Step2 from '@/assets/step2.png';
 import Step3 from '@/assets/step3.png';
@@ -136,7 +136,7 @@ const guides = ref([
     { id: 1, src: Step1 },
     { id: 2, src: Step2 },
     { id: 3, src: Step3 },
-    { id: 3, src: Step4 },
+    { id: 4, src: Step4 },
 ]);
 const draggableBtn = ref(null)
 const pos = reactive({ x: 0, y: 0 }) // initial position
@@ -258,23 +258,27 @@ function getPlatform() {
 
 const downloadIOS = () => {
     const link = document.createElement('a');
-    link.href = '/uploads/hj.mobileconfig';
-    link.download = 'huangjia.mobileconfig';
+    link.href = '/download/uploads/皇家国际.mobileconfig';
+    link.download = '皇家国际.mobileconfig';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);  
 }
 
-const downloadANROID = () => {
+const downloadANDROID = () => {
     const link = document.createElement('a');
-    link.href = '/uploads/hj.apk';
-    link.download = 'huangjia.apk';
+    link.href = '/download/uploads/皇家国际.apk';
+    link.download = '皇家国际.apk';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);  
 }
 
 const startGame = () => {
+
+    window.open('https://hj.app', '_blank');
+    return;
+
     const randomIndex = Math.floor(Math.random() * domains.value.length);
     const selectedDomain = domains.value[randomIndex];
 
@@ -304,7 +308,7 @@ const getDomains = async () => {
 }
 
 onMounted(() => {
-    getDomains();
+    // getDomains();
     const btn = draggableBtn.value
     if (btn) {
         const rect = btn.getBoundingClientRect()
